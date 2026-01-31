@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Rhythm Game - Niveau 3 TEST</title>
+<audio id="music" loop>
+    <source src="yyyyy.wav" type="audio/wav">
+</audio>
+<h1>NIVEAU 3</h1>
+<a href="accueil.html"><button id= "backButton" >← Retour Menu</button></a>
+<div id="score">Réussies : 0 | Total : 0 | Pièges : 0 | Appuis : 0</div>
+<p style="color: #ff6666;">⚠️ Notes ROUGES = PIÈGES !</p>
+
+<div id="game">
+    <div id="hitLine"></div>
+    <div id="pauseOverlay">PAUSE</div>
+</div>
+<div id="timer">Temps : 30</div>
+<!-- Script spécifique au niveau 2 -->
+<script src="niveau3.js" defer></script>
+<script>
+    const music = document.getElementById("music");
+    const clickPrompt = document.getElementById("clickPrompt");
+    let musicStarted = false;
+
+    // Dès qu'on clique n'importe où, lance la musique
+    document.addEventListener("click", () => {
+        if (!musicStarted) {
+            music.volume = 0.5; // Volume à 50% (0 à 1, pas 0 à 100)
+            music.play().then(() => {
+                console.log("Musique démarrée !");
+                clickPrompt.classList.add("hidden");
+            }).catch(err => {
+                console.log("Erreur de lecture:", err);
+            });
+            musicStarted = true;
+        }
+    });
+
+    // Alternative : tenter de lancer automatiquement au chargement
+    window.addEventListener("load", () => {
+        music.volume = 0.5;
+        music.play().then(() => {
+            console.log("Musique auto-démarrée !");
+            clickPrompt.classList.add("hidden");
+            musicStarted = true;
+        }).catch(err => {
+            // Si autoplay bloqué par le navigateur, on attend le clic
+            console.log("Autoplay bloqué, attente du clic utilisateur");
+        });
+    });
+
+    function goTo(page) {
+        window.location.href = page;
+    }
+</script>
+</body>
+</html>
